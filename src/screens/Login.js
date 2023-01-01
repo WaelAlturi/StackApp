@@ -1,7 +1,7 @@
 import React,{useState,useEffect} from "react";
 import {Text,View,TextInput,StyleSheet,TouchableOpacity,Alert} from 'react-native';
 import firbaseConfig from '../firebaseConfig';
-
+import AsyncStorage from "@react-native-async-storage/async-storage";
 const Login = () => {
     
     const [loginView,setLoginView] = useState(true);
@@ -20,7 +20,6 @@ const Login = () => {
 
         try {
             const user = await firbaseConfig.auth().createUserWithEmailAndPassword(email,Password);
-            console.log()
         } catch (error) {
             // console.log(error.message);
             setErrorMsg(error.message);
@@ -32,7 +31,9 @@ const Login = () => {
         setErrorMsg(null);
         try {
             const user = await firbaseConfig.auth().signInWithEmailAndPassword(email,Password);
-            
+            AsyncStorage.setItem('Account',JSON.stringify({
+                
+            }))
         } catch (error) {
             // console.log(error.message);
             setErrorMsg(error.message);
